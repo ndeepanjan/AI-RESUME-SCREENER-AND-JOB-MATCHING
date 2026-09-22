@@ -36,6 +36,10 @@ class IssueDetail(BaseModel):
 
 class AnalysisResponse(BaseModel):
     candidate_name: str = ""
+    email: str = ""
+    phone: str = ""
+    education: List[Dict[str, Any]] = []
+    years_of_experience: float = 0.0
     ATS_score: float
     component_scores: ComponentScores
     issues_summary: List[str]
