@@ -84,6 +84,34 @@
             background: #f5f3ff;
         }
 
+        .candidate-info {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 0 0 24px 0;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        .candidate-info-row {
+            margin-bottom: 6px;
+        }
+
+        .candidate-info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .candidate-info-label {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .education-item {
+            margin-left: 4px;
+            margin-bottom: 3px;
+        }
+
         h2 {
             font-size: 16px;
             font-weight: 700;
@@ -169,7 +197,6 @@
 </head>
 
 <body>
-
     <div class="page-header">
         <div class="report-label">
             AI Resume Screener & Job Matcher
@@ -183,9 +210,52 @@
     <h1 class="report-title">
         Resume-Job Description Match
     </h1>
-    {% if candidate_name %}
-    <div style="font-size:16px; color:#475569; margin-top:-16px; margin-bottom:24px;">
-        Candidate: <strong>{{ candidate_name }}</strong>
+    {% if candidate_name or email or phone or education or years_of_experience %}
+    <div class="candidate-info">
+        {% if candidate_name %}
+        <div class="candidate-info-row">
+            <span class="candidate-info-label">Candidate:</span> {{ candidate_name }}
+        </div>
+        {% endif %}
+
+        {% if email %}
+        <div class="candidate-info-row">
+            <span class="candidate-info-label">Email:</span> {{ email }}
+        </div>
+        {% endif %}
+
+        {% if phone %}
+        <div class="candidate-info-row">
+            <span class="candidate-info-label">Phone:</span> {{ phone }}
+        </div>
+        {% endif %}
+
+        {% if education %}
+        <div class="candidate-info-row">
+            <span class="candidate-info-label">Education:</span>
+            {% if education is sequence and education is not string %}
+                {% for item in education %}
+                    <div class="education-item">
+                        {% if item is mapping %}
+                            {% if item.get('degree') %}{{ item.get('degree') }}{% endif %}
+                            {% if item.get('institution') %} — {{ item.get('institution') }}{% endif %}
+                            {% if item.get('year') %} — {{ item.get('year') }}{% endif %}
+                        {% else %}
+                            {{ item }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                {{ education }}
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if years_of_experience %}
+        <div class="candidate-info-row">
+            <span class="candidate-info-label">Years of Experience:</span> {{ years_of_experience }}
+        </div>
+        {% endif %}
     </div>
     {% endif %}
 
