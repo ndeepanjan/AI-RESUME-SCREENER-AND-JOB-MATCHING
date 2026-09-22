@@ -135,6 +135,10 @@ def analyze_full_resume(
 
     return {
         "candidate_name":      parsed_resume.get('name', ''),
+        "email":               parsed_resume.get('email') or '',
+        "phone":               parsed_resume.get('phone') or '',
+        "education":           parsed_resume.get('education', []) or [],
+        "years_of_experience": round(experience_months / 12, 1),
         "ATS_score":          scores['overall_score'],
         "ats_score":          scores['overall_score'],
         "component_scores": {
